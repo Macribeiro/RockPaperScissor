@@ -1,11 +1,31 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System;
 using System.IO;
 public class Player
 {
     public string name;
     public int attempt = 1;
-    public string keep = "no";
+    public string keep = "yes";
+
+    public void winMessage()
+    {
+        Console.Write("\n\n--------------YOU WIN!--------------\n\n");
+    }
+    public void loseMessage()
+    {
+        Console.Write("\n\n--------------YOU LOSE!--------------\n\n");
+    }
+
+    public void tieMessage()
+    {
+        attempt++;
+        Console.Write("--------------Tie!--------------");
+    }
+
+    public void attempts()
+    {
+        Console.Write("Attempt: " + attempt.ToString());
+    }
 }
 
 public class Computer
@@ -26,10 +46,8 @@ public class Computer
 
         Console.WriteLine("\n\nPlayer " + player.name);
 
-        Console.Write("\nDo you want to play? (yes or no) ");
-        player.keep = Console.ReadLine();
-
         while (player.keep.Equals("yes", StringComparison.OrdinalIgnoreCase))
+
         {
             Console.WriteLine("\n-------------Caption-------------");
             Console.WriteLine("1 - Rock\n2 - Paper\n3 - Scissor\n");
@@ -39,61 +57,72 @@ public class Computer
             Console.Write("Choose a number: ");
             int playerChoice = Int32.Parse(Console.ReadLine());
 
-            if (playerChoice >= 4)
-            {
-                Console.WriteLine("Number Invalid! Try Again");
-                break;
-            }
-
             string cpuChoiceSymbol = symbolMap[computerChoice];
-            string palyerChoiceSymbol = symbolMap[playerChoice];
+            string playerChoiceSymbol = symbolMap[playerChoice];
 
-            if (computerChoice == 1 && playerChoice == 3)
-            {
-                Console.WriteLine("You chose " + palyerChoiceSymbol + ". The PC chose: " + cpuChoiceSymbol + "\n\nYou Lose!\n");
-                player.attempt++;
-                Console.WriteLine("Attempts: " + player.attempt);
-            }
-            else if (computerChoice == 3 && playerChoice == 1)
-            {
-                Console.WriteLine("You chose " + palyerChoiceSymbol + ". The PC chose: " + cpuChoiceSymbol + "\n\n--------------YOU WIN!--------------\"");
-                Console.WriteLine("Attempts: " + player.attempt);
-                break;
-            }
+            Console.WriteLine("you chose: " + playerChoice + " - " + playerChoiceSymbol.ToString());
 
-            if (computerChoice == 2 && playerChoice == 1)
+            switch (computerChoice)
             {
-                Console.WriteLine("You chose " + palyerChoiceSymbol + ". The PC chose: " + cpuChoiceSymbol + "\n\nYou Lose!");
-                Console.WriteLine("Attempts: " + player.attempt);
-                player.attempt++;
+                case 1:
+                    switch (playerChoice)
+                    {
+                        case 2:
+                            Console.WriteLine("You chose " + playerChoiceSymbol + ". The PC chose: " + cpuChoiceSymbol);
+                            player.winMessage();
+                            Console.WriteLine("Attempt: " + player.attempt);
+                            break;
+                        case 3:
+                            Console.WriteLine("You chose " + playerChoiceSymbol + ". The PC chose: " + cpuChoiceSymbol);
+                            player.loseMessage();
+                            Console.WriteLine("Attempts: " + player.attempt);
+                            player.attempt++;
+                            break;
+                        default:
+                            player.tieMessage();
+                            break;
+                    }
+                    break;
+                case 2:
+                    switch (playerChoice)
+                    {
+                        case 3:
+                            Console.WriteLine("You chose " + playerChoiceSymbol + ". The PC chose: " + cpuChoiceSymbol);
+                            player.winMessage();
+                            Console.WriteLine("Attempt: " + player.attempt);
+                            break;
+                        case 1:
+                            Console.WriteLine("You chose " + playerChoiceSymbol + ". The PC chose: " + cpuChoiceSymbol);
+                            player.loseMessage();
+                            Console.WriteLine("Attempt: " + player.attempt);
+                            player.attempt++;
+                            break;
+                        default:
+                            player.tieMessage();
+                            break;
+                    }
+                    break;
+                case 3:
+                    switch (playerChoice)
+                    {
+                        case 1:
+                            Console.WriteLine("You chose " + playerChoiceSymbol + ". The PC chose: " + cpuChoiceSymbol);
+                            player.winMessage();
+                            Console.WriteLine("Attempt: " + player.attempt);
+                            break;
+                        case 2:
+                            Console.WriteLine("You chose " + playerChoiceSymbol + ". The PC chose: " + cpuChoiceSymbol);
+                            player.loseMessage();
+                            Console.WriteLine("Attempt: " + player.attempt);
+                            break;
+                        default:
+                            player.tieMessage();
+                            break;
+                    }
+                    break;
             }
-            else if (computerChoice == 1 && playerChoice == 2)
-            {
-                Console.WriteLine("You chose " + palyerChoiceSymbol + ". The PC chose: " + cpuChoiceSymbol + "\n\n--------------YOU WIN!--------------\"");
-                Console.WriteLine("Attempts: " + player.attempt);
-                break;
-            }
-
-            if (computerChoice == 3 && playerChoice == 2)
-            {
-                Console.WriteLine("You chose " + palyerChoiceSymbol + ". The PC chose: " + cpuChoiceSymbol + "\n\nYou Lose!");
-                Console.WriteLine("Attempts: " + player.attempt);
-                player.attempt++;
-            }
-            else if (computerChoice == 2 && playerChoice == 3)
-            {
-                Console.WriteLine("You chose " + palyerChoiceSymbol + ". The PC chose: " + cpuChoiceSymbol + "\n\n--------------YOU WIN!--------------");
-                Console.WriteLine("Attempts: " + player.attempt);
-                break;
-            }
-
-            if (computerChoice == playerChoice || playerChoice == computerChoice)
-            {
-                Console.WriteLine("Tie!");
-                player.attempt++;
-            }
-
-            Console.Write("Do you want to keep playing? (yes or no) ");
+            Console.WriteLine("\n\n---------------------------------------\n\n");
+            Console.Write("\nDo you want to play? (yes || no): ");
             player.keep = Console.ReadLine();
         }
 
