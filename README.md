@@ -1,4 +1,4 @@
-Simples Game Project Rock, Paper, Scissor.
+Simple Game Project Rock, Paper, Scissor.
 
 
 This program gets your name and you compete with the machine (PC).
